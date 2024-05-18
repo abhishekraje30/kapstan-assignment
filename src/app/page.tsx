@@ -5,9 +5,9 @@ import Sidebar from "@/components/Sidebar";
 export default function Home() {
   return (
     <section className="flex min-h-screen">
-      <aside className="w-1/5 bg-[#37146B]">
-        <Sidebar />
-      </aside>
+      {/* <aside className="w-1/5 bg-[#37146B]"> */}
+      <Sidebar />
+      {/* </aside> */}
 
       <main className="w-full flex flex-col h-screen">
         <div className="h-[8%]">
