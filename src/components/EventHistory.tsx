@@ -48,6 +48,7 @@ export default function EventHistory() {
       title: "Status",
       key: "status",
       dataIndex: "status",
+      width: "20%",
       render: (
         status: "successful" | "deployed" | "in_progress" | "failed"
       ) => {
@@ -61,9 +62,9 @@ export default function EventHistory() {
       <Table
         columns={columns}
         dataSource={data}
-        size="middle"
+        size="large"
         pagination={{
-          pageSize: 4,
+          pageSize: 7,
           showSizeChanger: false,
         }}
       />

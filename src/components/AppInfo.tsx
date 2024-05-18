@@ -1,5 +1,5 @@
 "use client";
-import { Tabs, Tag } from "antd";
+import { ConfigProvider, Tabs, Tag } from "antd";
 import { GoDotFill } from "react-icons/go";
 import type { TabsProps } from "antd";
 import { RiComputerLine } from "react-icons/ri";
@@ -12,16 +12,18 @@ import {
 import Overview from "./Overview";
 import CustomTag from "./CustomTag";
 
-export default function AppInfo() {
-  const handleTabChange = (key: string) => {
-    console.log(key);
-  };
+export default function AppInfo({
+  selectedApp,
+}: {
+  selectedApp: ApplicationType;
+}) {
+  const handleTabChange = (key: string) => {};
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "Overview",
-      children: <Overview />,
+      children: <Overview selectedApp={selectedApp} />,
       icon: <DesktopOutlined />,
       style: { height: "100%" },
     },
@@ -45,20 +47,31 @@ export default function AppInfo() {
     },
   ];
   return (
-    <div className="px-4 py-2 flex flex-col h-full gap-2">
-      <div className="flex justify-between h-[5%]">
-        <h1 className="font-bold text-xl">tic-tac-toe</h1>
-
-        <CustomTag status="deployed" />
+    <ConfigProvider
+      theme={{
+        components: {
+          Tabs: {
+            itemSelectedColor: "#37146B",
+            inkBarColor: "#37146B",
+            itemHoverColor: "#37146B",
+          },
+        },
+      }}
+    >
+      <div className="p-4 flex flex-col max-h-full overflow-auto gap-2">
+        <div className="flex justify-between h-[5%]">
+          <h1 className="font-bold text-xl">{selectedApp?.name}</h1>
+          <CustomTag status="deployed" />
+        </div>
+        <div className="h-[95%]">
+          <Tabs
+            defaultActiveKey="1"
+            items={items}
+            onChange={handleTabChange}
+            style={{ height: "100%" }}
+          />
+        </div>
       </div>
-      <div className="h-[95%]">
-        <Tabs
-          defaultActiveKey="1"
-          items={items}
-          onChange={handleTabChange}
-          style={{ height: "100%" }}
-        />
-      </div>
-    </div>
+    </ConfigProvider>
   );
 }

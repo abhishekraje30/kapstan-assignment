@@ -4,23 +4,6 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useCallback, useEffect, useState } from "react";
 
-interface CpuDataType {
-  id: number;
-  timestamp: string;
-  applicationId: string;
-  cpuUtilization?: string;
-  memoryUtilization?: string;
-}
-
-interface ApplicationIdsType {
-  id: string;
-  name: string;
-  status: string;
-  version: string;
-  updatedAt: string;
-  desiredVersion: string;
-}
-
 export default function LineChart({
   chartTitle,
   chartType,
@@ -50,22 +33,19 @@ export default function LineChart({
       }
       const data = await response.json();
 
-      const seriesData = applicationIds.reduce(
-        (acc, app: ApplicationIdsType) => {
-          const filteredData = data.filter(
-            (x: CpuDataType) => parseInt(x.applicationId) === parseInt(app.id)
-          );
-          acc.push({
-            name: app.name,
-            data: filteredData.map((x: CpuDataType) => [
-              parseInt(x.timestamp) * 1000,
-              parseFloat(x[chartType as keyof CpuDataType] as string),
-            ]),
-          });
-          return acc;
-        },
-        [] as { name: string; data: [number, number][] }[]
-      );
+      const seriesData = applicationIds.reduce((acc, app: ApplicationType) => {
+        const filteredData = data.filter(
+          (x: ChartDataType) => parseInt(x.applicationId) === parseInt(app.id)
+        );
+        acc.push({
+          name: app.name,
+          data: filteredData.map((x: ChartDataType) => [
+            parseInt(x.timestamp) * 1000,
+            parseFloat(x[chartType as keyof ChartDataType] as string),
+          ]),
+        });
+        return acc;
+      }, [] as { name: string; data: [number, number][] }[]);
 
       setData(seriesData);
     } catch (error) {
@@ -108,7 +88,11 @@ export default function LineChart({
 
   return (
     <div className="p-4">
-      <HighchartsReact highcharts={Highcharts} options={options} />
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+        containerProps={{ style: { height: "100%" } }}
+      />
     </div>
   );
 }

@@ -1,13 +1,16 @@
 import { CheckCircleOutlined } from "@ant-design/icons";
-import { Button, Tabs, TabsProps } from "antd";
+import { Button, ConfigProvider, Tabs, TabsProps } from "antd";
 import LineChart from "./LineChart";
 import MemoryUtilization from "./EventHistory";
 import EventHistory from "./EventHistory";
+import { FaRegCircleCheck } from "react-icons/fa6";
 
-export default function Overview() {
-  const handleTabChange = (key: string) => {
-    console.log(key);
-  };
+export default function Overview({
+  selectedApp,
+}: {
+  selectedApp: ApplicationType;
+}) {
+  const handleTabChange = (key: string) => {};
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -33,34 +36,37 @@ export default function Overview() {
     },
   ];
   return (
-    <div className="h-full flex flex-col gap-2">
+    <div className="h-full flex flex-col gap-2 px-4 py-2">
       <div className="flex flex-col gap-2">
-        <h1 className="text-gray-600 text-xl">Service Info</h1>
-        <div className="flex gap-8">
-          <div>
-            <h1 className="text-xs">Current Version</h1>
-            <div className="flex gap-2">
-              <CheckCircleOutlined color="#34D399" />
-              <h1>In sync</h1>
+        <h1 className="text-gray-500 text-lg font-semibold">Service Info</h1>
+        <div className="flex gap-24">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-xs text-gray-500">Current Version</h1>
+            <div className="flex gap-2 items-center">
+              <FaRegCircleCheck color="green" />
+              <h1 className="font-semibold">In sync</h1>
             </div>
           </div>
-          <div>
-            <h1 className="text-xs">Desired Version</h1>
-            <h1>1.2.1</h1>
+          <div className="flex flex-col gap-2">
+            <h1 className="text-xs text-gray-500">Desired Version</h1>
+            <h1 className="font-semibold">{selectedApp?.desiredVersion}</h1>
           </div>
         </div>
-        <Button type="primary">Deploy</Button>
+        <div>
+          <Button type="primary">Deploy</Button>
+        </div>
       </div>
-      <div className="flex gap-2 w-full">
+      <div className="flex gap-2 w-full py-2">
         <div className="w-1/2">
           <h1 className="text-lg text-gray-500 font-semibold">
             System metrics
           </h1>
+
           <Tabs
             defaultActiveKey="1"
             items={items}
             onChange={handleTabChange}
-            style={{ height: "100%" }}
+            centered
           />
         </div>
         <div className="w-1/2">

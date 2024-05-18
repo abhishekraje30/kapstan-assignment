@@ -116,7 +116,7 @@ export default function Sidebar() {
           </div>
           <div className="px-4 py-3 flex justify-center">
             <div
-              className="w-10 h-10 rounded-full hover:bg-[#5820AB] flex justify-center items-center"
+              className="w-10 h-10 rounded-full hover:bg-[#5820AB] flex justify-center items-center hover:cursor-pointer"
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             >
               {isSidebarOpen ? (
