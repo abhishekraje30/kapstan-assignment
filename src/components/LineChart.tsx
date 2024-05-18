@@ -8,7 +8,8 @@ interface CpuDataType {
   id: number;
   timestamp: string;
   applicationId: string;
-  cpuUtilization: string;
+  cpuUtilization?: string;
+  memoryUtilization?: string;
 }
 
 interface ApplicationIdsType {
@@ -23,13 +24,15 @@ interface ApplicationIdsType {
 export default function LineChart({
   chartTitle,
   chartType,
-  chartURL,
+  chartURL = "",
 }: {
   chartTitle: string;
-  chartType: string;
-  chartURL: string;
+  chartType: "cpuUtilization" | "memoryUtilization";
+  chartURL?: string;
 }) {
-  const [data, setData] = useState<{ name: string; data: number[] }[]>([]);
+  const [data, setData] = useState<
+    { name: string; data: [number, number][] }[]
+  >([]);
   const applicationIds: {
     id: string;
     name: string;
@@ -54,19 +57,16 @@ export default function LineChart({
           );
           acc.push({
             name: app.name,
-            data: filteredData.map(
-              (x: { cpuUtilization: string; timestamp: string }) => [
-                parseInt(x.timestamp) * 1000,
-                parseFloat(x[chartType]),
-              ]
-            ),
+            data: filteredData.map((x: CpuDataType) => [
+              parseInt(x.timestamp) * 1000,
+              parseFloat(x[chartType as keyof CpuDataType] as string),
+            ]),
           });
           return acc;
         },
-        []
+        [] as { name: string; data: [number, number][] }[]
       );
 
-      console.log(seriesData);
       setData(seriesData);
     } catch (error) {
       console.error("Failed to fetch data:", error);
