@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 import Overview from "./Overview";
 import CustomTag from "./CustomTag";
+import EnvVariables from "./EnvVariables";
 
 export default function AppInfo({
   selectedApp,
@@ -30,7 +31,7 @@ export default function AppInfo({
     {
       key: "2",
       label: "Environment Variables",
-      children: "Content of Tab Pane 2",
+      children: <EnvVariables />,
       icon: <ToolOutlined />,
     },
     {
