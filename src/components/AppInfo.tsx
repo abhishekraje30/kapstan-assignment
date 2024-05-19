@@ -62,7 +62,7 @@ export default function AppInfo({
       <div className="p-4 flex flex-col max-h-full overflow-auto gap-2">
         <div className="flex justify-between h-[5%]">
           <h1 className="font-bold text-xl">{selectedApp?.name}</h1>
-          <CustomTag status="deployed" />
+          <CustomTag status={selectedApp?.status} />
         </div>
         <div className="h-[95%]">
           <Tabs

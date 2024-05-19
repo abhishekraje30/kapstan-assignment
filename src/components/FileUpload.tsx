@@ -1,7 +1,13 @@
 "use client";
 import { SetStateAction, useState } from "react";
 
-export default function FileUpload() {
+export default function FileUpload({
+  setEnvVariables,
+  handleCancel,
+}: {
+  setEnvVariables: SetStateAction<any>;
+  handleCancel: () => void;
+}) {
   const [dragging, setDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
@@ -18,21 +24,42 @@ export default function FileUpload() {
     e.preventDefault();
     setDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFile(e.dataTransfer.files[0]);
+      const droppedFile = e.dataTransfer.files[0];
+      setFile(droppedFile);
+      parseEnvFile(droppedFile);
+      handleCancel();
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      const selectedFile = e.target.files[0];
+      setFile(selectedFile);
+      parseEnvFile(selectedFile);
+      handleCancel();
     }
   };
 
-  const handleUpload = () => {
-    if (file) {
-      // Handle the file upload logic here
-      console.log(file);
-    }
+  const parseEnvFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      const text = e.target?.result as string;
+      const env = parseEnvString(text);
+      setEnvVariables(env);
+    };
+    reader.readAsText(file);
+  };
+
+  const parseEnvString = (str: string): Record<string, string> => {
+    const env: Record<string, string> = {};
+    const lines = str.split("\n");
+    lines.forEach((line) => {
+      const match = line.match(/^([^#=]+)=([^#]*)$/);
+      if (match) {
+        env[match[1].trim()] = match[2].trim();
+      }
+    });
+    return env;
   };
 
   return (
@@ -49,28 +76,18 @@ export default function FileUpload() {
         <p className="mb-2">or</p>
         <input
           type="file"
+          accept=".env"
           onChange={handleFileChange}
           className="hidden"
           id="file-upload"
         />
         <label
           htmlFor="file-upload"
-          className="cursor-pointer inline-block bg-blue-500 text-white px-4 py-2 rounded"
+          className="cursor-pointer inline-block bg-[#5820ab] text-white px-4 py-2 rounded"
         >
           Browse Files
         </label>
       </div>
-      {file && (
-        <div className="mt-4">
-          <p>Selected file: {file.name}</p>
-          <button
-            onClick={handleUpload}
-            className="mt-2 bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Upload
-          </button>
-        </div>
-      )}
     </div>
   );
 }

@@ -13,6 +13,7 @@
     "@ant-design/nextjs-registry": "^1.0.0",
     "antd": "^5.17.2",
     "clsx": "^2.1.1",
+    "dotenv-parse-variables": "^2.0.0",
     "highcharts": "^11.4.1",
     "highcharts-react-official": "^3.2.1",
     "next": "14.2.3",

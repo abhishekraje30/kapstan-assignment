@@ -16,14 +16,7 @@ export default function LineChart({
   const [data, setData] = useState<
     { name: string; data: [number, number][] }[]
   >([]);
-  const applicationIds: {
-    id: string;
-    name: string;
-    status: string;
-    version: string;
-    updatedAt: string;
-    desiredVersion: string;
-  }[] = useGetApplicationIds();
+  const applicationIds: ApplicationType[] = useGetApplicationIds();
 
   const getData = useCallback(async () => {
     try {

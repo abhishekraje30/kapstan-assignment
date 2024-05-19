@@ -6,7 +6,7 @@ interface DataType {
   key: number;
   event: string;
   version: string;
-  status: string;
+  status: ApplicationStatus;
 }
 
 export default function EventHistory() {
@@ -49,9 +49,7 @@ export default function EventHistory() {
       key: "status",
       dataIndex: "status",
       width: "20%",
-      render: (
-        status: "successful" | "deployed" | "in_progress" | "failed"
-      ) => {
+      render: (status: ApplicationStatus) => {
         return <CustomTag status={status} />;
       },
     },
