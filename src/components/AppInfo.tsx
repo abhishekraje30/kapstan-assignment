@@ -1,5 +1,5 @@
 "use client";
-import { ConfigProvider, Tabs, Tag } from "antd";
+import { Badge, ConfigProvider, Tabs, Tag } from "antd";
 import { GoDotFill } from "react-icons/go";
 import type { TabsProps } from "antd";
 import { RiComputerLine } from "react-icons/ri";
@@ -36,14 +36,18 @@ export default function AppInfo({
     },
     {
       key: "3",
-      label: "Alerts",
-      children: "Content of Tab Pane 3",
+      label: (
+        <Badge dot>
+          <p>Alerts</p>
+        </Badge>
+      ),
+      children: "Show Alerts",
       icon: <WarningOutlined />,
     },
     {
       key: "4",
       label: "Event history",
-      children: "Content of Tab Pane 4",
+      children: "Show Event history",
       icon: <HistoryOutlined />,
     },
   ];

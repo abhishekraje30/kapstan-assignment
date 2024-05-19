@@ -115,12 +115,18 @@ export default function EnvVariables() {
             <div key={key} style={{ display: "flex", marginBottom: "10px" }}>
               {editingKey === key ? (
                 <div className="flex gap-4 items-center justify-around w-full">
+                  <label htmlFor="name" className="font-bold">
+                    Name
+                  </label>
                   <input
                     type="text"
                     value={editingValues.key as string}
                     onChange={(e) => handleChange(e, "key")}
                     className="p-2 flex-1 border border-slate-500 rounded-md"
                   />
+                  <label htmlFor="name" className="font-bold">
+                    Value
+                  </label>
                   <input
                     type="text"
                     value={editingValues.value}
@@ -136,9 +142,15 @@ export default function EnvVariables() {
                 </div>
               ) : (
                 <div className="flex gap-4 items-center justify-around w-full">
+                  <label htmlFor="name" className="font-bold">
+                    Name
+                  </label>
                   <span className="p-2 flex-1 border border-slate-300 rounded-md">
                     {key}
                   </span>
+                  <label htmlFor="value" className="font-bold">
+                    Value
+                  </label>
                   <span className="p-2 flex-1 border border-slate-300 rounded-md">
                     {value}
                   </span>

@@ -1,5 +1,5 @@
 "use client";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useRef, useState } from "react";
 
 export default function FileUpload({
   setEnvVariables,
@@ -10,6 +10,7 @@ export default function FileUpload({
 }) {
   const [dragging, setDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -37,6 +38,9 @@ export default function FileUpload({
       setFile(selectedFile);
       parseEnvFile(selectedFile);
       handleCancel();
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
 
@@ -80,6 +84,7 @@ export default function FileUpload({
           onChange={handleFileChange}
           className="hidden"
           id="file-upload"
+          ref={fileInputRef}
         />
         <label
           htmlFor="file-upload"
