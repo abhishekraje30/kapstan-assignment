@@ -1,12 +1,14 @@
 import { Table, TableProps, Tag } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import CustomTag from "./CustomTag";
+import { getTimeAgo } from "../../utils/util";
 
 interface DataType {
   key: number;
   event: string;
   version: string;
   status: ApplicationStatus;
+  timestamp?: string;
 }
 
 export default function EventHistory() {
@@ -23,6 +25,7 @@ export default function EventHistory() {
         event: x.event,
         version: x.version,
         status: x.status,
+        timestamp: x.timestamp,
       }));
       setData(data);
     } catch (error) {
@@ -37,6 +40,17 @@ export default function EventHistory() {
       title: "Event",
       dataIndex: "event",
       key: "event",
+      render: (text, record) => {
+        console.log(record);
+        return (
+          <>
+            <p>{text}</p>
+            <p className="text-gray-500 text-sm">
+              {getTimeAgo(parseInt(record.timestamp ?? "1714367700"))}
+            </p>
+          </>
+        );
+      },
     },
     {
       title: "Version",
@@ -62,7 +76,7 @@ export default function EventHistory() {
         dataSource={data}
         size="large"
         pagination={{
-          pageSize: 7,
+          pageSize: 5,
           showSizeChanger: false,
         }}
       />

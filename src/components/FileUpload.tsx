@@ -73,10 +73,10 @@ export default function FileUpload({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={`border-2 border-dashed p-4 text-center ${
-          dragging ? "border-blue-500" : "border-gray-300"
+          dragging ? "border-[#5820ab]" : "border-gray-300"
         }`}
       >
-        <p className="mb-2">Drag & Drop your file here</p>
+        <p className="mb-2 font-semibold">Drag & Drop your file here</p>
         <p className="mb-2">or</p>
         <input
           type="file"
@@ -93,6 +93,9 @@ export default function FileUpload({
           Browse Files
         </label>
       </div>
+      <p className="text-gray-500 text-center text-sm mt-2">
+        Upload .env file. It should not be greater than 5KB
+      </p>
     </div>
   );
 }

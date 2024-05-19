@@ -1,7 +1,7 @@
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, Tabs, TabsProps } from "antd";
 import LineChart from "./LineChart";
-import MemoryUtilization from "./EventHistory";
+import { getTimeAgo } from "../../utils/util";
 import EventHistory from "./EventHistory";
 import { FaRegCircleCheck } from "react-icons/fa6";
 
@@ -35,6 +35,7 @@ export default function Overview({
       ),
     },
   ];
+
   return (
     <div className="h-full flex flex-col gap-2 px-4 py-2">
       <div className="flex flex-col gap-2">
@@ -52,8 +53,11 @@ export default function Overview({
             <h1 className="font-semibold">{selectedApp?.desiredVersion}</h1>
           </div>
         </div>
-        <div>
+        <div className="flex items-center justify-between">
           <Button type="primary">Deploy</Button>
+          <p className="text-gray-500">
+            Last updated {getTimeAgo(parseInt(selectedApp?.updatedAt))}
+          </p>
         </div>
       </div>
       <div className="flex gap-2 w-full py-2">
