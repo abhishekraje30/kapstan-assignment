@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 
 export default function FileUpload() {
   const [dragging, setDragging] = useState(false);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setDragging(true);
   };
@@ -14,7 +14,7 @@ export default function FileUpload() {
     setDragging(false);
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
@@ -22,7 +22,7 @@ export default function FileUpload() {
     }
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
     }
