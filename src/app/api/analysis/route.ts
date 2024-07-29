@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-let items = [];
+let items: any = [];
 
 export async function GET() {
   return NextResponse.json(items);
@@ -2659,16 +2659,4 @@ export async function POST(request: Request) {
 , { status: 200 });
 }
 
-export async function PUT(request: Request) {
-  const body = await request.json();
-  const { id, ...update } = body;
-  items = items.map(item => (item.id === id ? { ...item, ...update } : item));
-  return NextResponse.json({ message: 'Item updated' });
-}
 
-export async function DELETE(request: Request) {
-  const body = await request.json();
-  const { id } = body;
-  items = items.filter(item => item.id !== id);
-  return NextResponse.json({ message: 'Item deleted' });
-}
