@@ -2240,12 +2240,12 @@ export async function POST(request: Request) {
           keywordCount: [
             {
               count: 0,
-              foundIn: ["METADESCRIPTION"],
+              foundIn: ["HEADLINE"],
               keyword: "kobe",
             },
             {
               count: 0,
-              foundIn: ["METADESCRIPTION"],
+              foundIn: ["METATITLE"],
               keyword: "bryant",
             },
             {
@@ -2255,17 +2255,17 @@ export async function POST(request: Request) {
             },
             {
               count: 0,
-              foundIn: ["METADESCRIPTION"],
+              foundIn: ["FIRSTPARA"],
               keyword: "jordan",
             },
             {
               count: 0,
-              foundIn: [],
+              foundIn: ["METADESCRIPTION", "FIRSTPARA"],
               keyword: "robert",
             },
             {
               count: 0,
-              foundIn: [],
+              foundIn: ["METADESCRIPTION"],
               keyword: "horry",
             },
           ],
